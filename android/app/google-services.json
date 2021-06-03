@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "230359199625",
+    "project_id": "dhukuti-2021",
+    "storage_bucket": "dhukuti-2021.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230359199625:android:5c3e815dceca4b628b7b58",
+        "android_client_info": {
+          "package_name": "com.example.dhukuti"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "230359199625-3v2rucvc2c8v5autp7kascujk5ina2v4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABOb9pteO9UT4UINdAXCcMvCKpeXxohhM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "230359199625-3v2rucvc2c8v5autp7kascujk5ina2v4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "230359199625-mcr4srv4ld6ge15g6nf3anb8fi5frm50.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dhukuti"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
