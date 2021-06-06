@@ -60,7 +60,7 @@ class _RegistrationState extends State<Registration> {
                     onPressed: () async {
                       final String retVal = await Auth(auth: widget.auth).createAccount(
                           email: _emailController.text,
-                          password: _passwordController.text
+                          password: _passwordController.text,
                       );
                       if(retVal == "Success"){
                         _emailController.clear();

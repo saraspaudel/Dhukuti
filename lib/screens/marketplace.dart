@@ -28,7 +28,7 @@ class _MarketPlaceState extends State<MarketPlace> {
             height: 20,
           ),
           const Text(
-            "Loan Pools:",
+            "Loan Pools",
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dhukuti/screens/marketplace.dart';
+import 'package:dhukuti/screens/profile.dart';
 import 'package:dhukuti/screens/propose_loan.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,10 +23,7 @@ class _HomeState extends State<Home> {
   static const List<Widget> _widgetOptions = <Widget>[
     MarketPlace(),
     ProposeLoan(),
-    Text(
-      'User Profile',
-      style: optionStyle,
-    ),
+    Profile()
   ];
 
   void _onItemTapped(int index) {
@@ -38,7 +36,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Dhukuti App"),
+        title: const Text("Dhukuti"),
         centerTitle: true,
         actions: [
           IconButton(

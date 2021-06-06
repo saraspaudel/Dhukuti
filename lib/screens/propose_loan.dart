@@ -26,13 +26,14 @@ class _ProposeLoanState extends State<ProposeLoan> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
-        body: Column(
+        body: ListView(
           children: <Widget>[
             const SizedBox(
               height: 20,
             ),
             const Text(
               "Propose Loan Here:",
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
