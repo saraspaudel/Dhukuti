@@ -25,11 +25,10 @@ class Database {
     }
   }
 
-  Future<void> addTodo({String uid, num loanAmount, num loanDurationInDays, num loanFrequencyInDays, num interestRate, poolParticipantsTotal}) async {
+  Future<void> addTodo({String uid, num loanAmount, String loanFrequencyInDays, num interestRate, poolParticipantsTotal}) async {
     try {
       firestore.collection("todos").doc(uid).collection("todos").add({
         "loanAmount": loanAmount,
-        "loanDurationInDays": loanDurationInDays,
         "loanFrequencyInDays": loanFrequencyInDays,
         "interestRate": interestRate,
         "poolParticipantsTotal": poolParticipantsTotal

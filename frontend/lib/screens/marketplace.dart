@@ -25,14 +25,7 @@ class _MarketPlaceState extends State<MarketPlace> {
       body: Column(
         children: <Widget>[
           const SizedBox(
-            height: 20,
-          ),
-          const Text(
-            "Loan Pools",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            height: 10,
           ),
           Expanded(
             child: StreamBuilder(

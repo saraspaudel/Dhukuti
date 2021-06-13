@@ -55,7 +55,7 @@ class _HomeState extends State<Home> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_bag_outlined),
-            label: 'Marketplace',
+            label: 'Loan Pools',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add),
