@@ -62,6 +62,23 @@ class _PickTurnState extends State<PickTurn> {
                   ),
                 ),
               ),
+              Card(
+                margin: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: ElevatedButton(
+                            child: (Text("Submit")),
+                            key: const ValueKey("addButton"),
+                            onPressed: () {
+                            },
+                          )),
+                    ],
+                  ),
+                ),
+              ),
             ])));
   }
 }
