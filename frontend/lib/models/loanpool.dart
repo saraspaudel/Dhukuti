@@ -1,25 +1,47 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+class LoanPoolList {
+  final List<LoanPoolModel> loans;
 
-class LoanPoolModel{
-  String loanPoolId;
-  num loanAmount;
-  String loanFrequencyInDays;
-  num interestRate;
-  num poolParticipantsTotal;
-
-  LoanPoolModel({
-    this.loanPoolId,
-    this.loanAmount,
-    this.loanFrequencyInDays,
-    this.interestRate,
-    this.poolParticipantsTotal
+  LoanPoolList({
+    required this.loans,
   });
 
-  LoanPoolModel.fromDocumentSnapshot({DocumentSnapshot documentSnapshot}){
-    loanPoolId = documentSnapshot.id;
-    loanAmount = documentSnapshot.get('loanAmount') as num;
-    loanFrequencyInDays = documentSnapshot.get('loanFrequencyInDays');
-    interestRate = documentSnapshot.get('interestRate') as num;
-    poolParticipantsTotal = documentSnapshot.get('poolParticipantsTotal') as num;
+  factory LoanPoolList.fromJson(List<dynamic> parsedJson) {
+
+    List<LoanPoolModel> loans = <LoanPoolModel>[];
+    loans = parsedJson.map((i)=>LoanPoolModel.fromJson(i)).toList();
+
+    return new LoanPoolList(
+      loans: loans,
+    );
+  }
+  isEmpty(){
+    if(loans.isEmpty) return true;
+    else return false;
+  }
+}
+
+class LoanPoolModel{
+  String loanId;
+  num loanAmount;
+  num loanFrequencyInDays;
+  num loanInterestRate;
+  num totalParticipants;
+
+  LoanPoolModel({
+    required this.loanId,
+    required this.loanAmount,
+    required this.loanFrequencyInDays,
+    required this.loanInterestRate,
+    required this.totalParticipants
+  });
+
+  factory LoanPoolModel.fromJson(Map<String, dynamic> json) {
+    return LoanPoolModel(
+      loanId: json['loanId'].toString(),
+      loanAmount: json['loanAmount'],
+      loanFrequencyInDays: json['loanFrequencyInDays'],
+      loanInterestRate: json['loanInterestRate'],
+      totalParticipants: json['totalParticipants'],
+    );
   }
 }
