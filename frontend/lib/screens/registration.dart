@@ -1,17 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dhukuti/services/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Registration extends StatefulWidget {
-  final FirebaseAuth auth;
-  final FirebaseFirestore firestore;
-
-  const Registration({
-    Key key,
-    @required this.auth,
-    @required this.firestore,
-  }) : super(key: key);
   @override
   _RegistrationState createState () => _RegistrationState();
 }
@@ -58,20 +47,6 @@ class _RegistrationState extends State<Registration> {
                 ),
                 TextButton(
                     onPressed: () async {
-                      final String retVal = await Auth(auth: widget.auth).createAccount(
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                      );
-                      if(retVal == "Success"){
-                        _emailController.clear();
-                        _passwordController.clear();
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(retVal),
-                          ),
-                        );
-                      }
                     },
                     child: const Text("Create Account")
                 )

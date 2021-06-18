@@ -1,36 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dhukuti/screens/marketplace.dart';
-import 'package:dhukuti/services/database.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:number_display/number_display.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
 
 class ProposeLoan extends StatefulWidget {
-  final FirebaseAuth auth;
-  final FirebaseFirestore firestore;
-
-  const ProposeLoan({
-    Key key,
-    @required this.auth,
-    @required this.firestore,
-  }) : super(key: key);
   @override
   _ProposeLoanState createState() => _ProposeLoanState();
 }
 
 class _ProposeLoanState extends State<ProposeLoan> {
-  final moneyController = new MoneyMaskedTextController(
-      decimalSeparator: '', thousandSeparator: ',', precision: 0);
-  final TextEditingController _loanDurationInDaysController =
-      TextEditingController();
-  final TextEditingController _loanFrequencyInDaysController =
-      TextEditingController();
-  final TextEditingController _interestRateController = TextEditingController();
+  final moneyController = TextEditingController();
   final TextEditingController _poolParticipantsTotalController =
       TextEditingController();
-  String dropdownValue;
+  String dropdownValue = "";
   double _currentSliderValue = 2.0;
 
   final interestRateFormatter = createDisplay(
@@ -81,7 +62,6 @@ class _ProposeLoanState extends State<ProposeLoan> {
                     child: DropdownButton<String>(
                       hint: new Text("Loan Payment Frequency"),
                       isExpanded: true,
-                      value: dropdownValue,
                       icon: const Icon(Icons.arrow_downward),
                       iconSize: 24,
                       elevation: 16,
@@ -89,9 +69,9 @@ class _ProposeLoanState extends State<ProposeLoan> {
                         height: 2,
                         color: Colors.blue,
                       ),
-                      onChanged: (String newValue) {
+                      onChanged: (String? newValue) {
                         setState(() {
-                          dropdownValue = newValue;
+                          dropdownValue = newValue!;
                         });
                       },
                       items: <String>['Weekly', 'Every 2 Weeks', 'Monthly']
@@ -165,17 +145,8 @@ class _ProposeLoanState extends State<ProposeLoan> {
                     child: (Text("Submit")),
                     key: const ValueKey("addButton"),
                     onPressed: () {
-                      if (moneyController.numberValue != 0) {
+                      if (moneyController.text != "") {
                         setState(() {
-                          Database(firestore: FirebaseFirestore.instance)
-                              .addTodo(
-                                  uid: FirebaseAuth.instance.currentUser.uid,
-                                  loanAmount: moneyController.numberValue,
-                                  loanFrequencyInDays: dropdownValue,
-                                  interestRate: _currentSliderValue,
-                                  poolParticipantsTotal: num.parse(
-                                      _poolParticipantsTotalController.text));
-
 
                         });
                       } else {
