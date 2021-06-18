@@ -4,7 +4,7 @@ import mysql from 'mysql';
 const app = express();
 
 app.use(express.json()); //Used to parse JSON bodies
-app.use(express.urlencoded()); //Parse URL-encoded bodies
+app.use(express.urlencoded({extended: true})); //Parse URL-encoded bodies
 
 const port = 3000;
 
@@ -45,19 +45,57 @@ app.post('/login', (req, res) => {
 
 app.post('/register', (req, res) => {
   console.log('Got body: ', req.body);
-  res.sendStatus(200);
 
   var firstName = req.body.FirstName;
   var lastName = req.body.LastName;
   var email = req.body.email;
   var password = req.body.password;
-
-  connection.query(`INSERT INTO Users(FirstName, LastName, email, password)VALUES('${firstName}','${lastName}','${email}', '${password}');`, function (error, results, fields) {
-    if (error) throw error;
-    console.log('Result is: ', results);
+  
+  connection.query('SELECT email FROM Users WHERE email = ?', [email], (err, result) => {
+    console.log(result);
+    if (result.length === 1) {
+      res.status(409).send("That email address already exists.");
+    } else {
+      connection.query(`INSERT INTO Users(FirstName, LastName, email, password)VALUES('${firstName}','${lastName}','${email}', '${password}');`, function (error, results, fields) {
+        if (error) throw error;
+        console.log("Insert into results ", results);
+        res.status(201).send({"userId": results.insertId});
+      });
+    }
+    if (err) throw err;
   });
 })
 
+app.get('/loans', (req, res) => {
+  console.log("Called loans");
+  let sql = 'SELECT * FROM dhukuti.Loans;';
+  connection.query(sql, function (error, results, fields) {
+    console.log(results)
+    res.send(results);
+  });
+})
+
+app.post('/createLoan', (req, res) => {
+  var loanAmount = req.body.loanAmount;
+  var totalParticipants = req.body.totalParticipants;
+  var proposerUserId = req.body.proposerUserId;
+  var loanFrequencyInDays = req.body.loanFrequencyInDays;
+  var loanInterestRate = req.body.loanInterestRate;
+
+  console.log("Creating new loan");
+  let sql = `INSERT INTO Loans(loanAmount, totalParticipants, proposerUserId, loanFrequencyInDays, loanInterestRate)VALUES('${loanAmount}','${totalParticipants}','${proposerUserId}', '${loanFrequencyInDays}', '${loanInterestRate}');`;
+  connection.query(sql, function (error, results, fields) {
+    if (error) { res.sendStatus(500); throw error };
+    res.sendStatus(200);
+  });
+
+  for (let turn = 0; turn < totalParticipants; turn++) {
+    
+    
+  }
+
+})
+
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`App listening at http://localhost:${port}`)
 })
