@@ -1,17 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dhukuti/screens/login.dart';
 import 'package:dhukuti/screens/marketplace.dart';
 import 'package:dhukuti/screens/profile.dart';
 import 'package:dhukuti/screens/propose_loan.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:dhukuti/services/auth.dart';
 
 class Home extends StatefulWidget {
-  final FirebaseAuth auth;
-  final FirebaseFirestore firestore;
-
-  const Home({Key key, this.auth, this.firestore}) : super(key: key);
-
   @override
   _HomeState createState() => _HomeState();
 }
@@ -20,7 +13,7 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     MarketPlace(),
     ProposeLoan(),
     Profile()
@@ -43,7 +36,7 @@ class _HomeState extends State<Home> {
             key: const ValueKey("signOut"),
             icon: const Icon(Icons.exit_to_app),
             onPressed: () {
-              Auth(auth: widget.auth).signOut();
+              Navigator.push (context, MaterialPageRoute(builder: (context) => Login()),);
             },
           )
         ],
