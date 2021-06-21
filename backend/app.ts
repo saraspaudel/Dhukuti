@@ -86,7 +86,7 @@ app.get('/loanorder', (req, res) => {
 
   var loanId = req.query.loanId;
 
-  let sql = `SELECT * FROM dhukuti.loanOrder WHERE loanId = ${loanId};`;
+  let sql = `SELECT * FROM dhukuti.loanOrder WHERE loanId = ${loanId} and userId IS NULL;`;
 
   connection.query(sql, (error, results, fields) => {
     console.log(results);
@@ -126,6 +126,21 @@ app.post('/createLoan', async (req, res) => {
     res.status(201).send({loanId: loanId});
   });
 
+})
+
+app.post('/pickTurn', (req, res) => {
+  console.log("Called Pick Turn");
+  var loanOrderId = parseInt(req.body.loanOrderId);
+  var userId = parseInt(req.body.userId);
+  console.log("Body: ", req.body);
+  console.log("User ID: ", userId);
+
+  let sql = `UPDATE dhukuti.loanOrder SET userId = ${userId} WHERE loanOrderId = ${loanOrderId};`;
+  connection.query(sql, function (error, results, fields) {
+    if (error) { throw error };
+    console.log("Picked turn : ", results);
+    res.status(201).send("Turn assigned to you");
+  });
 })
 
 app.listen(port, () => {
