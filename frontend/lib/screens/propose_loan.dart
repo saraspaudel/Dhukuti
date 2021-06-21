@@ -11,7 +11,7 @@ class _ProposeLoanState extends State<ProposeLoan> {
   final moneyController = TextEditingController();
   final TextEditingController _poolParticipantsTotalController =
       TextEditingController();
-  String dropdownValue = "";
+  String? dropdownValue;
   double _currentSliderValue = 2.0;
 
   final interestRateFormatter = createDisplay(
@@ -64,6 +64,7 @@ class _ProposeLoanState extends State<ProposeLoan> {
                       isExpanded: true,
                       icon: const Icon(Icons.arrow_downward),
                       iconSize: 24,
+                      value: dropdownValue,
                       elevation: 16,
                       underline: Container(
                         height: 2,

@@ -33,10 +33,10 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         actions: [
           IconButton(
-            key: const ValueKey("signOut"),
-            icon: const Icon(Icons.exit_to_app),
+            key: const ValueKey("filter"),
+            icon: const Icon(Icons.filter_alt_outlined),
             onPressed: () {
-              Navigator.push (context, MaterialPageRoute(builder: (context) => Login()),);
+
             },
           )
         ],
@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_bag_outlined),
-            label: 'Loan Pools',
+            label: 'Marketplace',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add),

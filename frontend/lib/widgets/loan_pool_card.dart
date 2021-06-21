@@ -44,7 +44,7 @@ class _LoanPoolCardState extends State<LoanPoolCard> {
               title:
                   Text('Loan Amount: \$${display(widget.loanPool.loanAmount)}'),
               subtitle: Text(
-                  '''Paid every ${widget.loanPool.loanFrequencyInDays} days\nAt ${widget.loanPool.loanInterestRate} % Interest\n${widget.loanPool.totalParticipants} Spaces Left
+                  '''Paid every ${widget.loanPool.loanFrequencyInDays} days\nAt ${widget.loanPool.loanInterestRate} % Interest\n${widget.loanPool.totalParticipants} Participants
                              '''),
             ),
             Row(
@@ -59,8 +59,8 @@ class _LoanPoolCardState extends State<LoanPoolCard> {
                   child: Text('$joinText'),
                   onPressed: () {
                     if (_firstPressJoinBtn) {
-                      _firstPressJoinBtn = false;
-                      changeText();
+                      // _firstPressJoinBtn = false;
+                      // changeText();
                       Navigator.push (context, MaterialPageRoute(builder: (context) => PickTurn(widget.loanPool.loanId)),);
                     }
                   },
