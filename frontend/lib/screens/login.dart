@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'home.dart';
+import 'package:provider/provider.dart';
 
 Future<UserModel> loginUser(String email, String password) async {
   final response = await http.post(
@@ -95,6 +97,8 @@ class _LoginState extends State<Login> {
                       });
                       UserModel? user = await _futureUser;
                       if(user != null){
+                        final prefs = await SharedPreferences.getInstance();
+                        prefs.setInt('userId', user.userId);
                         Navigator.push (context, MaterialPageRoute(builder: (context) => Home()),);
                       }
                   },
