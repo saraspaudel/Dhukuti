@@ -98,16 +98,16 @@ app.get('/loanorder', (req, res) => {
 app.post('/createLoan', async (req, res) => {
   var loanAmount = req.body.loanAmount;
   var totalParticipants = req.body.totalParticipants;
+  var openSpaces = totalParticipants;
   var proposerUserId = req.body.proposerUserId;
   var loanFrequencyInDays = req.body.loanFrequencyInDays;
   var loanInterestRate = req.body.loanInterestRate;
-  var loanId;
 
   console.log("Creating new loan");
-  let sql = `INSERT INTO Loans(loanAmount, totalParticipants, proposerUserId, loanFrequencyInDays, loanInterestRate)VALUES('${loanAmount}','${totalParticipants}','${proposerUserId}', '${loanFrequencyInDays}', '${loanInterestRate}');`;
+  let sql = `INSERT INTO Loans(loanAmount, totalParticipants, openSpaces, proposerUserId, loanFrequencyInDays, loanInterestRate)VALUES('${loanAmount}','${totalParticipants}', '${openSpaces}','${proposerUserId}', '${loanFrequencyInDays}', '${loanInterestRate}');`;
   connection.query(sql, function (error, results, fields) {
     if (error) { res.sendStatus(500); throw error };
-    loanId = results.insertId;
+    let loanId = results.insertId;
     console.log("Loan created with id ", loanId);
 
     let increments = loanInterestRate / (totalParticipants/2);
@@ -117,7 +117,10 @@ app.post('/createLoan', async (req, res) => {
       console.log("Generating loan orders");
       let sql = `INSERT INTO loanOrder (loanId, turn, interestRate) VALUES ('${loanId}', '${turn}', '${interestRate}');`
       connection.query(sql, function (error, results, fields) {
-        if (error) { throw error };
+        if (error) {
+          res.sendStatus(500);
+          throw error;
+        };
         console.log("Inserted loan order: ", results);
       });
       interestRate =  interestRate - increments;
@@ -132,14 +135,18 @@ app.post('/pickTurn', (req, res) => {
   console.log("Called Pick Turn");
   var loanOrderId = parseInt(req.body.loanOrderId);
   var userId = parseInt(req.body.userId);
+  var loanId = parseInt(req.body.loanId);
   console.log("Body: ", req.body);
   console.log("User ID: ", userId);
 
   let sql = `UPDATE dhukuti.loanOrder SET userId = ${userId} WHERE loanOrderId = ${loanOrderId};`;
   connection.query(sql, function (error, results, fields) {
-    if (error) { throw error };
     console.log("Picked turn : ", results);
-    res.status(201).send("Turn assigned to you");
+    let sql2 = `UPDATE dhukuti.Loans SET openSpaces = openSpaces - 1 WHERE openSpaces > 0 AND loanId = ${loanId};`
+    connection.query(sql2, function (error, results, fields) {
+      if (error) { throw error };
+      res.status(201).send("Turn assigned to you");
+    })
   });
 })
 
